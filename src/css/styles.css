@@ -1,0 +1,94 @@
+ .gallery {
+     flex-wrap: wrap;
+     justify-content: flex-start;
+     gap: 24px;
+     padding-top: 70px;
+     padding-left: 24px;
+     display: flex;
+ }
+
+ .photo-card {
+     flex-basis: calc(100% / 4 - 24px);
+ }
+
+ .photo-card img {
+     width: 100%;
+     height: 200px;
+     object-fit: cover;
+ }
+
+ .info {
+     display: flex;
+     justify-content: space-around;
+     border: 2px solid #c8c8cec1;
+     border-top: none;
+ }
+
+ .info-name {
+     font-weight: 600;
+ }
+
+ .info-value {
+     font-weight: 500;
+ }
+
+ .info-desc {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+ }
+
+ button:disabled {
+     background-color: #c1c1c1;
+     cursor: not-allowed;
+ }
+
+ button.hidden {
+     display: none;
+ }
+
+ .search-form {
+     display: flex;
+     justify-content: center;
+     position: fixed;
+     top: 0;
+     width: 100%;
+     background-color: #404bbf;
+ }
+
+ .search-form input {
+     width: 300px;
+     padding: 10px;
+     font-size: 18px;
+ }
+
+ .search-form button {
+     position: absolute;
+     top: 2px;
+     right: 5px;
+     border: none;
+     font-size: 23px;
+     cursor: pointer;
+     background-color: #ffffff;
+ }
+
+ .search-container {
+     position: relative;
+ }
+
+ .load-more {
+     margin-top: 10px;
+     color: #ffffff;
+     padding: 5px 20px;
+     letter-spacing: 0.04em;
+     cursor: pointer;
+     background-color: #404bbf;
+     border-radius: 4px;
+     font-size: 20px;
+     font-weight: 700;
+     line-height: 1.5;
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+     border: none;
+ }
