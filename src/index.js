@@ -1,29 +1,30 @@
 import './css/styles.css';
-import PixabayAPI  from './js/pixabay-api';
-import creatPhotoCard from './js/createPhotoCard.js'
+import {PixabayAPI}  from './js/pixabay-api';
+import createPhotoCard from './js/createPhotoCard.js'
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const formSearchEl = document.querySelector('.search-form');
+const formEl = document.querySelector('.search-form');
 const galleryEl = document.querySelector('.gallery');
-const loadMoreBtnEl = document.querySelector('.load-more');
+const btnLoadMoreEl = document.querySelector('.load-more');
 
-const pixabayApi = new PixabayAPI();
+const pixabayAPI = new PixabayAPI();
 
 let gallery = new SimpleLightbox('.gallery a');
 
-const handleSearchFoto = async ev => {
-  ev.preventDefault();
+formEl.addEventListener('submit', handleFormSubmit);
+btnLoadMoreEl.addEventListener('click', handleLoadMoreBtnClick);
+
+function handleFormSubmit(event) {
+  event.preventDefault();
   galleryEl.innerHTML = '';
-  loadMoreBtnEl.classList.add('is-hidden');
-  pixabayApi.page = 1;
+  btnLoadMoreEl.classList.add('is-hidden');
+  const form = event.currentTarget;
+  const searchQuery = form.elements['searchQuery'].value.trim();
+  pixabayAPI.q = searchQuery;
 
-  const serchItemEl = ev.target.elements['searchQuery'].value.trim();
-
-  pixabayApi.q = serchItemEl;
-
-  if (!serchItemEl) {
+  if (!searchQuery) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
@@ -31,11 +32,12 @@ const handleSearchFoto = async ev => {
   }
 
   searchGallery();
-};
+}
+
 
 async function searchGallery() {
   try {
-    const { data } = await pixabayApi.fetchPhoto();
+    const { data } = await pixabayAPI.fetchImgs();
 
     if (data.totalHits === 0) {
       Notiflix.Notify.failure(
@@ -43,14 +45,14 @@ async function searchGallery() {
       );
       return;
     }
-    galleryEl.innerHTML = creatPhotoCard (data.hits);
+    galleryEl.innerHTML = createPhotoCard(data.hits);
 
     Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
 
     gallery.refresh();
 
-    if (data.totalHits > pixabayApi.per_page) {
-      loadMoreBtnEl.classList.remove('is-hidden');
+    if (data.totalHits > pixabayAPI.per_page) {
+      btnLoadMoreEl.classList.remove('is-hidden');
     }
   } catch (error) {
     console.log(error);
@@ -58,19 +60,27 @@ async function searchGallery() {
 }
 
 function handleLoadMoreBtnClick() {
-  pixabayApi.page += 1;
-  searchMorePhoto();
+  pixabayAPI.page += 1;
+  searchLoadMoreImg();
 }
 
-async function searchMorePhoto() {
+async function searchLoadMoreImg() {
   try {
-    const { data } = await pixabayApi.fetchPhoto();
+    const { data } = await pixabayAPI.fetchImgs();
 
-    galleryEl.insertAdjacentHTML('beforeend', creatPhotoCard(data.hits));
+    galleryEl.insertAdjacentHTML('beforeend', createPhotoCard(data.hits));
     gallery.refresh();
 
-    if (data.hits.length < pixabayApi.per_page) {
-      loadMoreBtnEl.classList.add('is-hidden');
+    const { height: cardHeight } =
+      galleryEl.firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
+
+    if (data.hits.length < pixabayAPI.per_page) {
+      btnLoadMoreEl.classList.add('is-hidden');
       return Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
@@ -79,6 +89,3 @@ async function searchMorePhoto() {
     console.log(error);
   }
 }
-
-formSearchEl.addEventListener('submit', handleSearchFoto);
-loadMoreBtnEl.addEventListener('click', handleLoadMoreBtnClick);

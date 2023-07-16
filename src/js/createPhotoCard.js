@@ -18,16 +18,16 @@ export default function createMarkup(arr) {
   
         <div class="info">
           <p class="info-item">
-            <b class="info-desc"><span class = "info-name" >Likes</span> <span class = "info-value">${likes}</span></b>
+            <b class="info-desc"><span class = "info-name" >Likes</span> <span class="info-item__value">${likes}</span></b>
           </p>
           <p class="info-item">
-            <b class="info-desc"><span class = "info-name" >Views</span> <span class = "info-value" >${views}</span></b>
+            <b class="info-desc"><span class = "info-name" >Views</span> <span class="info-item__value" >${views}</span></b>
           </p>
           <p class="info-item">
-            <b class="info-desc"><span class = "info-name" >Comments</span> <span class = "info-value">${comments}</span></b>
+            <b class="info-desc"><span class = "info-name" >Comments</span> <span  class="info-item__value">${comments}</span></b>
           </p>
           <p class="info-item">
-            <b class="info-desc"><span class = "info-name" >Downloads</span> <span class = "info-value">${downloads}</span></b>
+            <b class="info-desc"><span class = "info-name" >Downloads</span> <span  class="info-item__value">${downloads}</span></b>
           </p>
         </div>
        
