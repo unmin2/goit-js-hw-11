@@ -1,5 +1,5 @@
 import './css/styles.css';
-import { PixabayAPI } from './js/pixabay-api';
+import PixabayAPI  from './js/pixabay-api';
 import creatPhotoCard from './js/createPhotoCard.js'
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
