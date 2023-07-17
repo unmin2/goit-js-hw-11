@@ -44,14 +44,13 @@ export class PixabayAPI {
     // Adding the API key to the search parameters
     this.#BASE_SEARCH_PARAMS.key = this.#API_KEY;
   }
-
-  async fetchImgs() {
-    const searchParams = new URLSearchParams({
-      ...this.#BASE_SEARCH_PARAMS,
-      page: this.page,
-      q: this.q,
-      per_page: this.per_page,
-    });
-    return await axios.get(`${this.#BASE_URL}?${searchParams}`);
-  }
+    async fetchImgs() {
+  const searchParams = new URLSearchParams({
+    ...this.#BASE_SEARCH_PARAMS,
+    page: this.page,
+    q: this.q,
+    per_page: this.per_page,
+  });
+  return await axios.get(`${this.#BASE_URL}?${searchParams.toString()}`);
+}
 }
