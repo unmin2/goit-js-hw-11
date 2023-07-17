@@ -21,6 +21,6 @@ export class PixabayAPI {
       q: this.q,
       per_page: this.per_page,
     });
-    return await axios.get(`${this.#BASE_URL}?${searchParams}`);
+    return await axios.get(`${this.#BASE_URL}?${this.#BASE_SEARCH_PARAMS}`);
   }
 }
